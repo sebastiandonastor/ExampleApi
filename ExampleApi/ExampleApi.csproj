@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201902121412203_addedType.Designer.cs">
       <DependentUpon>201902121412203_addedType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902121818585_addedDate.cs" />
+    <Compile Include="Migrations\201902121818585_addedDate.Designer.cs">
+      <DependentUpon>201902121818585_addedDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902121412203_addedType.resx">
       <DependentUpon>201902121412203_addedType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902121818585_addedDate.resx">
+      <DependentUpon>201902121818585_addedDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
