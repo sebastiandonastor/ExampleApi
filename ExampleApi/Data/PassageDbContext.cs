@@ -1,4 +1,5 @@
-﻿using ExampleApi.Models;
+﻿using ExampleApi.EntitiesConfiguration;
+using ExampleApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace ExampleApi.Data
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new QuotesConfiguration());
         }
     }
 }

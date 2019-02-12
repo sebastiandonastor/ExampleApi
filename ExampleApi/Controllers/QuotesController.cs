@@ -13,13 +13,21 @@ namespace ExampleApi.Controllers
     {
         PassageDbContext _passageDbContext = new PassageDbContext();
         // GET: api/Quotes
-        public IEnumerable<Quote> Get()
+        [HttpGet]
+        public IHttpActionResult loadQuotes()
         {
-            return _passageDbContext.Quotes.ToList();
+            return Ok(_passageDbContext.Quotes.ToList());
+        }
+
+        [HttpGet]
+        [Route("api/Quotes/Test/{id:int}")]
+        public int Test(int id)
+        {
+            return id;
         }
 
         // GET: api/Quotes/5
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult loadQuote(int id)
         {
 
             var quote = _passageDbContext.Quotes.FirstOrDefault(q => q.Id == id);
@@ -30,27 +38,42 @@ namespace ExampleApi.Controllers
         }
 
         // POST: api/Quotes
-        public void Post([FromBody]Quote value)
+       [HttpPost]
+        public IHttpActionResult createQuote([FromBody]Quote value)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _passageDbContext.Quotes.Add(value);
             _passageDbContext.SaveChanges();
+           return StatusCode(HttpStatusCode.Created);
         }
 
         // PUT: api/Quotes/5
-        public void Put(int id, [FromBody]Quote value)
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]Quote value)
         {
             var quote = _passageDbContext.Quotes.FirstOrDefault(q => q.Id == id);
             quote.Title = value.Title;
             quote.Author = value.Author;
             quote.Content = value.Content;
             _passageDbContext.SaveChanges();
+            return Ok("Updated successfuly");
         }
 
         // DELETE: api/Quotes/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
+
             var quote = _passageDbContext.Quotes.FirstOrDefault(q => q.Id == id);
+            if (quote == null)
+            {
+                return BadRequest("Record not FOUND AND COULND'T DELETE");
+            }
             _passageDbContext.Quotes.Remove(quote);
+            return Ok("Deleted");
         }
     }
 }
