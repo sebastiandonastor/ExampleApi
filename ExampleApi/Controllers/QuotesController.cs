@@ -12,6 +12,10 @@ namespace ExampleApi.Controllers
     public class QuotesController : ApiController
     {
         PassageDbContext _passageDbContext = new PassageDbContext();
+
+      
+  
+
         // GET: api/Quotes
         [HttpGet]
         public IHttpActionResult loadQuotes(string sort = "")
@@ -33,6 +37,19 @@ namespace ExampleApi.Controllers
             }
             return Ok(quotes);
         }
+        // GET SINGLE QUOTE
+        [HttpGet]
+        public IHttpActionResult loadQuote(int id)
+        {
+
+            var quote = _passageDbContext.Quotes.FirstOrDefault(q => q.Id == id);
+            if (quote == null)
+            {
+                return NotFound();
+            };
+            return Ok(quote);
+        }
+
 
         [HttpGet]
         [Route("api/Quotes/Test/{id:int}")]
@@ -42,13 +59,15 @@ namespace ExampleApi.Controllers
         }
 
         // GET: api/Quotes/5
-        public IHttpActionResult loadQuote(int id)
+       
+            [HttpGet]
+            [Route("api/Quotes/paging/{pageNumber=1}/{pageSize=2}")]
+       public IHttpActionResult pagingQuote(int pageNumber,int pageSize)
         {
+            var quote = _passageDbContext.Quotes
+                .OrderBy(q => q.Id).Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
 
-            var quote = _passageDbContext.Quotes.FirstOrDefault(q => q.Id == id);
-            if (quote == null) {
-                return NotFound();
-                    };
             return Ok(quote);
         }
 
