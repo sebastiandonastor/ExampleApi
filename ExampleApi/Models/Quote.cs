@@ -15,6 +15,7 @@ namespace ExampleApi.Models
         public string Author { get; set; }
         public string Content { get; set; }
         public string Type { get; set; }
+        public DateTime? createdAt { get; set; }
 
     }
 

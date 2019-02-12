@@ -14,9 +14,24 @@ namespace ExampleApi.Controllers
         PassageDbContext _passageDbContext = new PassageDbContext();
         // GET: api/Quotes
         [HttpGet]
-        public IHttpActionResult loadQuotes()
+        public IHttpActionResult loadQuotes(string sort = "")
         {
-            return Ok(_passageDbContext.Quotes.ToList());
+            IQueryable<Quote> quotes;
+            switch(sort)
+            {
+                case "asc":
+                    quotes = _passageDbContext.Quotes.OrderBy(q => q.createdAt);  
+                    break;
+
+                case "desc":
+                    quotes = _passageDbContext.Quotes.OrderByDescending(q => q.createdAt);
+                    break;
+
+                default:
+                    quotes = _passageDbContext.Quotes;
+                    break;
+            }
+            return Ok(quotes);
         }
 
         [HttpGet]
