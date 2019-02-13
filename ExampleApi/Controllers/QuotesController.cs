@@ -71,6 +71,13 @@ namespace ExampleApi.Controllers
             return Ok(quote);
         }
 
+        [HttpGet]
+        [Route("api/Quotes/Find/{search}")]
+        public IHttpActionResult findQuotes(String search ="")
+        {
+            return Ok(_passageDbContext.Quotes.Where(q => q.Type.StartsWith(search)));
+        } 
+
         // POST: api/Quotes
        [HttpPost]
         public IHttpActionResult createQuote([FromBody]Quote value)
@@ -83,6 +90,8 @@ namespace ExampleApi.Controllers
             _passageDbContext.SaveChanges();
            return StatusCode(HttpStatusCode.Created);
         }
+
+        
 
         // PUT: api/Quotes/5
         [HttpPut]
